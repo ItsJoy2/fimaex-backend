@@ -128,7 +128,7 @@
                 </li> --}}
 
                 <!-- Settings -->
-                <li class="nav-item nav-item {{ Str::contains(request()->path(), 'withdraws') ? 'active' : '' }}">
+                <li class="nav-item nav-item {{ Str::contains(request()->path(), 'settings') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#settings">
                         <i class="fas fa-cog"></i>
                         <p>Settings</p>
@@ -137,7 +137,7 @@
                     <div class="collapse" id="settings">
                         <ul class="nav nav-collapse">
                             {{-- <li><a href="/holidays"><span class="sub-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">Holidays Setting</span></a></li> --}}
-                            <li><a href="/withdraws/settings"><span class="sub-item {{ Str::contains(request()->path(), 'withdraws') ? 'active' : '' }}">Withdraws Settings</span></a></li>
+                            <li><a href="/withdraws/settings"><span class="sub-item {{ Str::contains(request()->path(), 'settings') ? 'active' : '' }}">Withdraws Settings</span></a></li>
                             <li><a href="/founder-bonus"><span class="sub-item">Founder Bonus</span></a></li>
                             {{-- <li><a href="/ReferralsSettings"><span class="sub-item">Referral Settings</span></a></li> --}}
                         </ul>
