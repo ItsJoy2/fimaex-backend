@@ -112,12 +112,12 @@
 
 
                 <!-- Cron -->
-                <li class="nav-item {{ request()->is('cron') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->is('cron') ? 'active' : '' }}">
                     <a href="/cron">
                         <i class="fas fa-school"></i>
                         <p>Cron Job</p>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Tickets -->
                 {{-- <li class="nav-item {{ request()->is('tickets') ? 'active' : '' }}">
@@ -128,12 +128,12 @@
                 </li> --}}
 
                 <!-- Settings -->
-                {{-- <li class="nav-item nav-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">
+                <li class="nav-item nav-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#settings">
                         <i class="fas fa-cog"></i>
                         <p>Settings</p>
                         <span class="caret"></span>
-                    </a> --}}
+                    </a>
                     <div class="collapse" id="settings">
                         <ul class="nav nav-collapse">
                             <li><a href="/holidays"><span class="sub-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">Holidays Setting</span></a></li>
