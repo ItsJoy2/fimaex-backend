@@ -5,7 +5,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="/dashboard" class="logo">
-                <img src="https://yeldo-front-puce.vercel.app/_next/static/media/logo.beb988fc.png" alt="App Name" class="navbar-brand" height="20">
+                <img src="" alt="App Name" class="navbar-brand" height="20">
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -120,24 +120,25 @@
                 </li>
 
                 <!-- Tickets -->
-                <li class="nav-item {{ request()->is('tickets') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->is('tickets') ? 'active' : '' }}">
                     <a href="/tickets">
                         <i class="fas fa-ticket-alt"></i>
                         <p>Tickets</p>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Settings -->
-                <li class="nav-item nav-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">
+                {{-- <li class="nav-item nav-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#settings">
                         <i class="fas fa-cog"></i>
                         <p>Settings</p>
                         <span class="caret"></span>
-                    </a>
+                    </a> --}}
                     <div class="collapse" id="settings">
                         <ul class="nav nav-collapse">
                             <li><a href="/holidays"><span class="sub-item {{ Str::contains(request()->path(), 'holidays') ? 'active' : '' }}">Holidays Setting</span></a></li>
                             <li><a href="/withdraws/settings"><span class="sub-item">Withdraws Settings</span></a></li>
+                            <li><a href="/founder-bonus"><span class="sub-item">Founder Bonus</span></a></li>
                             <li><a href="/ReferralsSettings"><span class="sub-item">Referral Settings</span></a></li>
                         </ul>
                     </div>
