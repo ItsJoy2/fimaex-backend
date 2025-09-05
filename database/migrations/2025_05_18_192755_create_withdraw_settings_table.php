@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert([
+        DB::table('withdraw_settings')->insert([
            'min_withdraw' => '10',
            'max_withdraw' => '10000',
            'charge' => '5',
