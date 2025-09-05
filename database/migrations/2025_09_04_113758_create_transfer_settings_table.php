@@ -20,7 +20,6 @@ return new class extends Migration
         DB::table('transfer_settings')->insert([
             'min_transfer' => 100,
             'max_transfer' => 5000,
-            'charge' => 10,
             'status' => 1,
             'created_at' => now(),
             'updated_at' => now(),
