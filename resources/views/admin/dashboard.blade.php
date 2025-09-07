@@ -78,7 +78,7 @@
         </div>
 
         {{-- Investment Section --}}
-        <div class="card shadow-sm mb-4 border-0">
+        {{-- <div class="card shadow-sm mb-4 border-0">
             <div class="card-body">
                 <h5 class="card-title fw-bold mb-4">Investments</h5>
                 <div class="row g-4">
@@ -88,7 +88,7 @@
                     <x-dashboard.stat-card icon="fas fa-hourglass-end" value="$0" label="Expired Investment" bg="warning" />
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
     </div>
