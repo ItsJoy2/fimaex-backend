@@ -93,10 +93,11 @@ public function getDirectReferrals(Request $request): JsonResponse
                 return [
                     'id' => $club->id,
                     'name' => $club->name,
-                    'image' => $club->image ? asset('storage/' . $club->image) : null,
+                    'Badge' => $club->image ? asset('storage/' . $club->image) : null,
                     'required_refers' => $club->required_refers,
                     'bonus_percent' => $club->bonus_percent,
                     'incentive' => $club->incentive,
+                    'incentive_image' => $club->incentive_image ? asset('storage/' . $club->incentive_image) : null,
                     'status' => $club->status ? 'Active' : 'Inactive',
                     'created_at' => $club->created_at,
                     'updated_at' => $club->updated_at,
