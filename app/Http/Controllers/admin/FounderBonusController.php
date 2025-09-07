@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,6 @@ class FounderBonusController extends Controller
         DB::beginTransaction();
         try {
             foreach ($founders as $user) {
-
                 $user->increment('profit_wallet', $amount);
 
                 $this->transactionService->addNewTransaction(
@@ -47,16 +47,67 @@ class FounderBonusController extends Controller
                     $amount,
                     "founder_bonus",
                     "+",
-                    "Founder Bonus from Admin"
+                    "Founder Bonus Added from Admin"
                 );
             }
 
-            DB::commit();
+            $sponsors = User::whereIn('id', $founders->pluck('refer_by')->filter()->unique())->get();
 
-            return redirect()->back()->with('success', 'Founder bonus sent successfully to all founders!');
+            foreach ($sponsors as $sponsor) {
+                $directFounders = $founders->where('refer_by', $sponsor->id);
+
+                if ($directFounders->count() == 0) {
+                    continue;
+                }
+
+                $club = Club::where('status', 1)
+                    ->where('required_refers', '<=', $directFounders->count())
+                    ->orderByDesc('required_refers')
+                    ->first();
+
+                if (!$club) {
+                    continue;
+                }
+
+                $alreadyAssigned = DB::table('user_club')
+                    ->where('user_id', $sponsor->id)
+                    ->where('club_id', $club->id)
+                    ->exists();
+
+                if (!$alreadyAssigned) {
+                    DB::table('user_club')->where('user_id', $sponsor->id)->delete();
+                    DB::table('user_club')->insert([
+                        'user_id'    => $sponsor->id,
+                        'club_id'    => $club->id,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                $totalFounderBonus = $directFounders->count() * $amount;
+
+                $clubBonus = ($totalFounderBonus * $club->bonus_percent) / 100;
+
+                if ($clubBonus > 0) {
+                    $sponsor->increment('profit_wallet', $clubBonus);
+
+                    $this->transactionService->addNewTransaction(
+                        $sponsor->id,
+                        $clubBonus,
+                        "club_bonus",
+                        "+",
+                        "{$club->name} Club Bonus from Founders"
+                    );
+                }
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Founder bonus sent successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Something went wrong! ' . $e->getMessage());
         }
     }
+
+
 }

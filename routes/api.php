@@ -29,6 +29,9 @@ Route::prefix('user')->middleware(['auth:sanctum','verified'])->group(function (
     Route::post('transfer', [TransactionsController::class, 'transfer']);
     Route::post('withdraw', [TransactionsController::class, 'withdraw']);
 
+    // club list
+    Route::get('clubs', [UserController::class, 'clubList']);
+
     // support Message
     Route::get('/tickets', [TicketController::class, 'index']);
     Route::post('/tickets', [TicketController::class, 'create']);

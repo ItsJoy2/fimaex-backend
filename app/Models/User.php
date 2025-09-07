@@ -90,7 +90,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Founder::class, 'user_id');
     }
+    public function clubs()
+    {
+        return $this->belongsToMany(Club::class, 'user_club');
+    }
 
+    public function activeClub()
+    {
+        return $this->clubs()->orderBy('required_refers', 'desc')->first();
+}
 
 }
 

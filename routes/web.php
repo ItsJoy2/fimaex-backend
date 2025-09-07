@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\PlansController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\admin\DepositController;
 use App\Http\Controllers\admin\WithdrawController;
+use App\Http\Controllers\admin\AdminClubController;
 use App\Http\Controllers\admin\AdminTicketController;
 use App\Http\Controllers\admin\FounderBonusController;
 use App\Http\Controllers\admin\TransactionsController;
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('withdraw', WithdrawController::class);
     Route::resource('transactions', TransactionsController::class);
     Route::resource('kyc', KycController::class);
+    Route::resource('clubs', AdminClubController::class);
     Route::get('cron', [CronController::class, 'view'])->name('cron');
 
 

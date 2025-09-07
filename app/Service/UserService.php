@@ -27,8 +27,9 @@ class UserService
             ->where('remark', 'deposit')
             ->whereIn('status', ['Completed', 'Paid'])
             ->sum('amount');
-        $totalEarning = (float) Transactions::where('user_id', $user->id)->whereIn('remark', ['referral_commission', 'interest'])->sum('amount');
+        $totalEarning = (float) Transactions::where('user_id', $user->id)->whereIn('remark', ['referral_commission','club_bonus','founder_bonus'])->sum('amount');
         $totalReferBonus = (float) Transactions::where('user_id', $user->id)->where('remark','referral_commission')->sum('amount');
+        $founderMember = $user->referrals()->where('is_founder', 1)->count();
         $founderBadge = null;
         if ($user->is_founder) {
             $founderPackage = DB::table('package')->where('name', 'Become a Founder')->first();
@@ -36,6 +37,17 @@ class UserService
             if ($founderPackage && $founderPackage->icon) {
                 $founderBadge = asset('storage/' . $founderPackage->icon);
             }
+        }
+
+        $clubData = DB::table('user_club')
+            ->join('clubs', 'user_club.club_id', '=', 'clubs.id')
+            ->where('user_club.user_id', $user->id)
+            ->select('clubs.id', 'clubs.name', 'clubs.image', 'clubs.bonus_percent', 'clubs.incentive')
+            ->first();
+
+        $clubBadge = null;
+        if ($clubData && $clubData->image) {
+            $clubBadge = asset('storage/' . $clubData->image);
         }
 
         return response()->json([
@@ -55,6 +67,13 @@ class UserService
                     'refer_by' => $user->refer_by,
                     'is_founder' => $user->is_founder,
                     'founder_badge' => $founderBadge,
+                    'club' => $clubData ? [
+                    'id' => $clubData->id,
+                    'name' => $clubData->name,
+                    // 'bonus_percent' => $clubData->bonus_percent,
+                    // 'incentive' => $clubData->incentive,
+                    'club_badge' => $clubBadge,
+                    ] : null,
                     'is_block' => $user->is_block,
                     'kyc_status' => $user->kyc_status,
                     'created_at' => $user->created_at,
@@ -63,6 +82,7 @@ class UserService
                 'main_wallet' => $user->main_wallet,
                 'profit_wallet' => $user->profit_wallet,
                 'directRefer' => $directRefer,
+                'founder_member' => $founderMember,
                 'totalInvestment' => $totalInvestment,
                 'totalWithdraw' => $totalWithdraw,
                 'totalTransfer' => $totalTransfer,

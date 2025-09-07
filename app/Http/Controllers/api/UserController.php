@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Club;
+use App\Models\User;
 use App\Models\Founder;
 use App\Models\Investor;
-use App\Models\User;
 use App\Service\UserService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use function Pest\Laravel\json;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -81,6 +82,32 @@ public function getDirectReferrals(Request $request): JsonResponse
     public function kyc(Request $request): JsonResponse
     {
         return $this->userService->UserKyc($request);
+    }
+
+     public function clubList(): JsonResponse
+    {
+        $clubs = Club::where('status', 1)
+            ->orderBy('required_refers', 'asc')
+            ->get()
+            ->map(function ($club) {
+                return [
+                    'id' => $club->id,
+                    'name' => $club->name,
+                    'image' => $club->image ? asset('storage/' . $club->image) : null,
+                    'required_refers' => $club->required_refers,
+                    'bonus_percent' => $club->bonus_percent,
+                    'incentive' => $club->incentive,
+                    'status' => $club->status ? 'Active' : 'Inactive',
+                    'created_at' => $club->created_at,
+                    'updated_at' => $club->updated_at,
+                ];
+            });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Club list retrieved successfully',
+            'data' => $clubs,
+        ]);
     }
 
 }

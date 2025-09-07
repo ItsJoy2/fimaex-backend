@@ -88,6 +88,30 @@
                         <p>Transactions</p>
                     </a>
                 </li>
+
+                <!-- Clubs -->
+                <li class="nav-item {{ Str::contains(request()->path(), 'clubs') ? 'active' : '' }}"><a data-bs-toggle="collapse" href="#clubsMenu">
+                        <i class="fas fa-star"></i>
+                        <p>Clubs</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ Str::contains(request()->path(), 'clubs') ? 'show' : '' }}" id="clubsMenu">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('clubs.index') }}">
+                                    <span class="sub-item {{ Str::contains(request()->path(), 'clubs') ? 'active' : '' }}">All Clubs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('clubs.create') }}">
+                                    <span class="sub-item {{ Str::contains(request()->path(), 'clubs/create') ? 'active' : '' }}">Create Club</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
                 <!-- KYC -->
                 @php
                     use App\Models\kyc;
