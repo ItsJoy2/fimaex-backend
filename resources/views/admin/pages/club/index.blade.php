@@ -18,10 +18,11 @@
                     <tr>
                         <th>#</th>
                         <th>Club Name</th>
-                        <th>Image</th>
+                        <th>Club Badge</th>
                         <th>Required Refers</th>
                         <th>Bonus %</th>
                         <th>Incentive</th>
+                        <th>Incentive Image</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -42,6 +43,13 @@
                             <td>{{ $club->bonus_percent }}%</td>
                             <td>{{ $club->incentive ?? 'N/A' }}</td>
                             <td>
+                                @if($club->incentive_image)
+                                    <img src="{{ asset('storage/'.$club->incentive_image) }}" width="90" height="60" class="rounded">
+                                @else
+                                    <span class="text-muted">N/A</span>
+                                @endif
+                            </td>
+                            <td>
                                 @if($club->status)
                                     <span class="badge bg-success">Active</span>
                                 @else
@@ -60,7 +68,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7">No Clubs Found!</td>
+                            <td colspan="9">No Clubs Found!</td>
                         </tr>
                     @endforelse
                 </tbody>

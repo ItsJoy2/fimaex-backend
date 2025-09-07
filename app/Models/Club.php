@@ -12,6 +12,7 @@ class Club extends Model
         'required_refers',
         'bonus_percent',
         'incentive',
+        'incentive_image',
         'status'
     ];
     public function users()

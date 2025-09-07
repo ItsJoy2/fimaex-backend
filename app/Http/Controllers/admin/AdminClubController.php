@@ -27,13 +27,18 @@ class AdminClubController extends Controller
             'required_refers' => 'required|integer|min:1',
             'bonus_percent'   => 'required|numeric|min:0|max:100',
             'incentive'       => 'nullable|string|max:255',
+            'incentive_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'status'          => 'required|boolean',
         ]);
 
-        $data = $request->except('image');
+        $data = $request->except(['image', 'incentive_image']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('clubs', 'public');
+        }
+
+        if ($request->hasFile('incentive_image')) {
+            $data['incentive_image'] = $request->file('incentive_image')->store('clubs', 'public');
         }
 
         Club::create($data);
@@ -54,13 +59,18 @@ class AdminClubController extends Controller
             'required_refers' => 'required|integer|min:1',
             'bonus_percent'   => 'required|numeric|min:0|max:100',
             'incentive'       => 'nullable|string|max:255',
+            'incentive_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'status'          => 'required|boolean',
         ]);
 
-        $data = $request->except('image');
+        $data = $request->except(['image', 'incentive_image']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('clubs', 'public');
+        }
+
+        if ($request->hasFile('incentive_image')) {
+            $data['incentive_image'] = $request->file('incentive_image')->store('clubs', 'public');
         }
 
         $club->update($data);

@@ -7,7 +7,7 @@
 
 {{-- Club Image --}}
 <div class="mb-3">
-    <label class="form-label">Club Image</label><br>
+    <label class="form-label">Club Badge</label><br>
     @if(!empty($club) && $club->image)
         <img src="{{ asset('storage/' . $club->image) }}" width="80" class="mb-2 rounded">
     @endif
@@ -33,6 +33,15 @@
     <label class="form-label">Incentive</label>
     <input type="text" name="incentive" class="form-control"
            value="{{ old('incentive', $club->incentive ?? '') }}">
+</div>
+
+{{-- Incentive Image --}}
+<div class="mb-3">
+    <label class="form-label">Incentive Image</label><br>
+    @if(!empty($club) && $club->incentive_image)
+        <img src="{{ asset('storage/' . $club->incentive_image) }}" width="80" class="mb-2 rounded">
+    @endif
+    <input type="file" name="incentive_image" class="form-control">
 </div>
 
 {{-- Status --}}

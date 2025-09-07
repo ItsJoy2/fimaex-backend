@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('required_refers');
             $table->decimal('bonus_percent', 5, 2);
             $table->string('incentive')->nullable();
+            $table->string('incentive_image')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
