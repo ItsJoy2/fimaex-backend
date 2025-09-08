@@ -16,7 +16,7 @@
     </div>
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Email Verified!</h2>
     <p class="text-gray-600 mb-6">Your email has been successfully verified. You can now continue using all features.</p>
-    <a href="https://www.petroxcin.com/dashboard" class="inline-block px-6 py-2 bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition">
+    <a href="https://www.fimaex.com/dashboard" class="inline-block px-6 py-2 bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition">
         Continue to Dashboard
     </a>
 </div>
