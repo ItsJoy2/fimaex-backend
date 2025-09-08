@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\AdminTicketController;
 use App\Http\Controllers\admin\FounderBonusController;
 use App\Http\Controllers\admin\TransactionsController;
 use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\admin\GeneralSettingsController;
 use App\Http\Controllers\admin\WithdrawSettingsController;
 use App\Http\Controllers\admin\ReferralsSettingsController;
 
@@ -56,6 +57,10 @@ Route::middleware('auth')->group(function () {
     //Founder Bonus
     Route::get('/founder-bonus', [FounderBonusController::class, 'index'])->name('admin.founder.bonus');
     Route::post('/founder-bonus/send', [FounderBonusController::class, 'sendFounderBonus'])->name('admin.founder.bonus.send');
+
+    // General Settings
+    Route::get('general-settings', [GeneralSettingsController::class, 'index'])->name('admin.general.settings');
+    Route::post('general-settings', [GeneralSettingsController::class, 'update'])->name('admin.general.settings.update');
 
 });
 

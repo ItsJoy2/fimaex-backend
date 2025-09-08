@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $generalSettings->app_name ?? 'Laravel Admin' }}</title>
+    @php
+        use App\Models\GeneralSetting;
+        $generalSettings = GeneralSetting::first();
+    @endphp
+    @if($generalSettings && $generalSettings->favicon)
+        <link rel="icon" type="image/png" href="{{ asset('storage/' . $generalSettings->favicon) }}">
+        <link rel="apple-touch-icon" href="{{ asset('storage/' . $generalSettings->favicon) }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('default-favicon.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('default-favicon.png') }}">
+    @endif
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -99,7 +110,9 @@
 <body>
 <div class="login-wrapper">
     <div class="logo">
-        <img src="" alt="Fimaex">
+        @if($generalSettings && $generalSettings->logo)
+            <img src="{{ asset('storage/' . $generalSettings->logo) }}" alt="{{ $generalSettings->app_name ?? 'App Name' }}" class="navbar-brand" height="50">
+        @endif
     </div>
     <h2>Admin Login</h2>
 

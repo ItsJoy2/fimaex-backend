@@ -73,6 +73,8 @@
                                     <i class="fas fa-edit"></i> Manage
                                 </button>
                             </td>
+                        @else
+                        <td class="text-center">--</td>
                        @endif
                     </tr>
 
