@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('app_name');
             $table->string('logo')->nullable();
             $table->string('favicon')->nullable();
+            $table->string('total_founder')->default(0);
+            $table->string('available_founder_slot')->default(0);
             $table->timestamps();
         });
 

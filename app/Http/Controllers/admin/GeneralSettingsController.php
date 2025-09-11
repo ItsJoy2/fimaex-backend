@@ -22,12 +22,16 @@ class GeneralSettingsController extends Controller
             'app_name' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'favicon' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
+            'total_founder'=> 'required|numeric|min:0',
+            'available_founder_slot'=> 'required|numeric|min:0',
         ]);
 
         $generalSettings = GeneralSetting::first();
 
         $data = $request->only([
             'app_name',
+            'total_founder',
+            'available_founder_slot',
         ]);
 
 

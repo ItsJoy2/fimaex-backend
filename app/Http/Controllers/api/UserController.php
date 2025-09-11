@@ -8,6 +8,7 @@ use App\Models\Founder;
 use App\Models\Investor;
 use App\Service\UserService;
 use Illuminate\Http\Request;
+use App\Models\GeneralSetting;
 use function Pest\Laravel\json;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -108,6 +109,26 @@ public function getDirectReferrals(Request $request): JsonResponse
             'status' => true,
             'message' => 'Club list retrieved successfully',
             'data' => $clubs,
+        ]);
+    }
+
+    public function generalSettings()
+    {
+        $settings = GeneralSetting::first();
+
+        if (!$settings) {
+            $settings = [
+                'app_name' => null,
+                'logo' => null,
+                'favicon' => null,
+                'total_founder' => 0,
+                'available_founder_slot' => 0,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $settings
         ]);
     }
 
