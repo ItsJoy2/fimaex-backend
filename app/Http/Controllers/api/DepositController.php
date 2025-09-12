@@ -63,7 +63,7 @@ class DepositController extends Controller
         $deposit = new Deposit();
         $deposit->user_id    = $user->id;
         $deposit->amount     = $request->amount;
-        $deposit->wallet_type      = $request->wallet;
+        $deposit->wallet      = $request->wallet;
         $deposit->transaction_id = $response['data']['invoice_id'];
         $deposit->save();
 
