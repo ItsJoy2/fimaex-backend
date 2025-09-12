@@ -59,5 +59,6 @@ Route::post('forget-password-send-mail',[AuthController::class, 'ForgotPasswordS
 Route::post('reset-password',[AuthController::class, 'ResetPassword']);
 Route::get('cron',[CronController::class, 'cronJob']);
 Route::get('trx-cron',[CronController::class, 'paymentCheck']);
+Route::post('deposit-check', [DepositController::class, 'webHook']);
 require __DIR__ . '/auths.php';
 
