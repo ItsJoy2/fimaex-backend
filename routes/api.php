@@ -43,6 +43,7 @@ Route::prefix('user')->middleware(['auth:sanctum','verified'])->group(function (
 
     //deposit
     Route::post('deposit', [DepositController::class, 'store']);
+    Route::get('deposit-history', [DepositController::class, 'history']);
 
 
 });
