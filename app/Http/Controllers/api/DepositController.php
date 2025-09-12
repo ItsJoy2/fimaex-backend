@@ -46,8 +46,8 @@ class DepositController extends Controller
             "token_name"  => "MIND",
             "user_id"     => 29,
             // "contract_address" => "0x55d398326f99059fF775485246999027B3197955",
-            // "webhook_url" => "https://api.fimaex.com/api/deposit-check",
-            "webhook_url" => "https://webhook.site/7975c5c7-28a7-4799-bfc5-97e974b657ac",
+            "webhook_url" => "https://api.fimaex.com/api/deposit-check",
+            // "webhook_url" => "https://webhook.site/7975c5c7-28a7-4799-bfc5-97e974b657ac",
 
         ];
 
