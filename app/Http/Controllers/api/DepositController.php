@@ -43,7 +43,7 @@ class DepositController extends Controller
             "amount"      => $request->amount,
             "chain_id"    => 56,
             "type"        => "token",
-            "token_name"  => "USDT",
+            "token_name"  => "MIND",
             "user_id"     => 29,
             "contract_address" => "0x55d398326f99059fF775485246999027B3197955",
             "webhook_url" => "https://api.fimaex.com/api/deposit-check",
