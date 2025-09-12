@@ -42,7 +42,7 @@ Route::prefix('user')->middleware(['auth:sanctum','verified'])->group(function (
     Route::post('/tickets/{ticket}/resolve', [TicketController::class, 'resolve']);
 
     //deposit
-   Route::post('deposit', [DepositController::class, 'addDeposit']);
+    Route::post('deposit', [DepositController::class, 'store']);
 
 
 });
