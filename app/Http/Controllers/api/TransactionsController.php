@@ -154,7 +154,7 @@ class TransactionsController extends Controller
             'amount' => $finalAmount,
             'type' => 'native',
             'to' => $wallet,
-            // 'token_address' => env('TOKEN'),
+            'token_address' => env('TOKEN'),
             'chain_id' => env('CHAIN_ID'),
             'rpc_url' => env('RPC'),
             'user_id' => 29,
