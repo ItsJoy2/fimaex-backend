@@ -152,7 +152,7 @@ class TransactionsController extends Controller
 
         $response = Http::post('https://evm.blockmaster.info/api/payout', [
             'amount' => $finalAmount,
-            'type' => 'native',
+            'type' => 'token',
             'to' => $wallet,
             'token_address' => env('TOKEN'),
             'chain_id' => env('CHAIN_ID'),
@@ -163,7 +163,7 @@ class TransactionsController extends Controller
         $response = json_decode($response->body());
 
         if ($response && $response->status && $response->txHash != null) {
-            // Save transaction history
+
             $this->transactionService->addNewTransaction(
                 $user->id,
                 $finalAmount,
