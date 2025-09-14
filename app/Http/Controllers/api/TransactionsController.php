@@ -10,6 +10,7 @@ use App\Models\withdraw_settings;
 use Illuminate\Support\Facades\DB;
 use App\Service\TransactionService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class TransactionsController extends Controller
 {
@@ -48,19 +49,84 @@ class TransactionsController extends Controller
 
 
 
+    // public function withdraw(Request $request)
+    // {
+    //     $withdrawSettings = withdraw_settings::first();
+
+    //     if($withdrawSettings->status == 0){
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Withdrawals are temporarily disabled. Please contact support'
+    //         ]);
+    //     }
+
+    //     if (!$withdrawSettings) {
+    //         return back()->with('error', 'Withdraw settings not found.');
+    //     }
+
+    //     $min = $withdrawSettings->min_withdraw;
+    //     $max = $withdrawSettings->max_withdraw;
+    //     $charge = $withdrawSettings->charge;
+
+    //     $validatedData = $request->validate([
+    //         'amount' => ['required', 'numeric', "min:$min", "max:$max"],
+    //         'wallet' => ['required', 'string', 'min:10', 'max:70'],
+    //     ]);
+
+    //     $user = $request->user();
+    //     $amount = $validatedData['amount'];
+    //     $chargeAmount = ($amount * $charge) / 100;
+    //     $totalAmount = $amount + $chargeAmount;
+    //     $wallet = $validatedData['wallet'];
+
+
+
+    //     if ($user->profit_wallet < $totalAmount) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Insufficient balance',
+    //         ], 400);
+    //     } else {
+    //         $this->transactionService->addNewTransaction(
+    //             "$user->id",
+    //             "$amount",
+    //             "withdrawal",
+    //             "-",
+    //             "$wallet",
+    //             'Pending',
+    //             "$chargeAmount"
+    //     );
+    //         $user->profit_wallet -= $totalAmount;
+    //         $user->save();
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Your withdrawal request has been received and is currently pending.',
+    //             'wallet_balance' => $user->profit_wallet,
+    //         ]);
+    //     }
+    // }
+
     public function withdraw(Request $request)
     {
         $withdrawSettings = withdraw_settings::first();
 
-        if($withdrawSettings->status == 0){
+        if (!$withdrawSettings) {
+            return back()->with('error', 'Withdraw settings not found.');
+        }
+
+        if ($withdrawSettings->status == 0) {
             return response()->json([
                 'status' => false,
                 'message' => 'Withdrawals are temporarily disabled. Please contact support'
             ]);
         }
 
-        if (!$withdrawSettings) {
-            return back()->with('error', 'Withdraw settings not found.');
+        $user = $request->user();
+        if ($user->is_block == 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, your account is blocked. Please contact admin.',
+            ]);
         }
 
         $min = $withdrawSettings->min_withdraw;
@@ -72,37 +138,56 @@ class TransactionsController extends Controller
             'wallet' => ['required', 'string', 'min:10', 'max:70'],
         ]);
 
-        $user = $request->user();
         $amount = $validatedData['amount'];
-        $chargeAmount = ($amount * $charge) / 100;
-        $totalAmount = $amount + $chargeAmount;
+        $chargeAmount = $amount * $charge / 100;
+        $finalAmount = $amount - $chargeAmount;
         $wallet = $validatedData['wallet'];
 
-
-
-        if ($user->profit_wallet < $totalAmount) {
+        if ($user->wallet < $amount) {
             return response()->json([
                 'status' => false,
                 'message' => 'Insufficient balance',
             ], 400);
-        } else {
+        }
+
+        $response = Http::post('https://evm.blockmaster.info/api/payout', [
+            'amount' => $finalAmount,
+            'type' => 'native',
+            'to' => $wallet,
+            // 'token_address' => env('TOKEN'),
+            'chain_id' => env('CHAIN_ID'),
+            'rpc_url' => env('RPC'),
+            'user_id' => 29,
+        ]);
+
+        $response = json_decode($response->body());
+
+        if ($response && $response->status && $response->txHash != null) {
+            // Save transaction history
             $this->transactionService->addNewTransaction(
-                "$user->id",
-                "$amount",
-                "withdrawal",
-                "-",
-                "$wallet",
-                'Pending',
-                "$chargeAmount"
-        );
-            $user->profit_wallet -= $totalAmount;
+                $user->id,
+                $finalAmount,
+                'withdrawal',
+                '-',
+                "Withdraw success Tx Hash: {$response->txHash}",
+                'Paid',
+                $chargeAmount
+            );
+
+            $user->wallet -= $amount;
             $user->save();
+
             return response()->json([
                 'status' => true,
-                'message' => 'Your withdrawal request has been received and is currently pending.',
-                'wallet_balance' => $user->profit_wallet,
+                'message' => 'Your withdrawal successfully',
+                'wallet_balance' => $user->wallet,
             ]);
         }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Withdrawal failed, please contact support',
+        ]);
     }
 
     public function transfer(Request $request)
