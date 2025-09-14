@@ -143,7 +143,7 @@ class TransactionsController extends Controller
         $finalAmount = $amount - $chargeAmount;
         $wallet = $validatedData['wallet'];
 
-        if ($user->wallet < $amount) {
+        if ($user->profit_wallet < $amount) {
             return response()->json([
                 'status' => false,
                 'message' => 'Insufficient balance',
@@ -174,13 +174,13 @@ class TransactionsController extends Controller
                 $chargeAmount
             );
 
-            $user->wallet -= $amount;
+            $user->profit_wallet -= $amount;
             $user->save();
 
             return response()->json([
                 'status' => true,
                 'message' => 'Your withdrawal successfully',
-                'wallet_balance' => $user->wallet,
+                'wallet_balance' => $user->profit_wallet,
             ]);
         }
 
