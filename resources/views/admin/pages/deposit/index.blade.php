@@ -56,7 +56,8 @@
                             </button>
                         </td>
                         <td>{{ $deposit->user->name ?? 'N/A' }}</td>
-                        <td>${{$deposit->amount}}</td>
+                        <td>${{ number_format($deposit->amount, 4) }}</td>
+
 
                         <td>
                             <span class="badge
