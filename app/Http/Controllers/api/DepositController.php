@@ -41,11 +41,11 @@ class DepositController extends Controller
 
         $payload = [
             "amount"      => $request->amount,
-            "chain_id"    => 9996,
+            "chain_id"    => 56,
             "type"        => "token",
-            "token_name"  => "MUSD",
+            "token_name"  => "USDT",
             "user_id"     => 29,
-            "contract_address" => "0xaC264f337b2780b9fd277cd9C9B2149B43F87904",
+            "contract_address" => "0x55d398326f99059ff775485246999027b3197955",
             "webhook_url" => "https://api.fimaex.com/api/deposit-check",
 
         ];
