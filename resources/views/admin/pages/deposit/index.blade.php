@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body table-responsive">
-            <form method="GET" action="{{ route('deposit.index') }}" class="mb-3">
+            {{-- <form method="GET" action="{{ route('deposit.index') }}" class="mb-3">
                 <div class="row">
                     <div class="col-md-4">
                         <select name="filter" class="form-control">
@@ -22,6 +22,12 @@
                         <a href="{{ route('deposit.index') }}" class="btn btn-secondary">Reset</a>
                     </div>
                 </div>
+            </form> --}}
+            <form method="GET" action="{{ route('deposit.index') }}" class="d-flex justify-content-end mb-3" style="max-width: 300px; margin-left: auto;">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
             </form>
 
             <table class="table table-striped table-hover mt-3">
@@ -33,7 +39,7 @@
                     <th>Amount</th>
                     <th>Status</th>
                     <th>Created At</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </tr>
                 </thead>
                 <tbody>
@@ -61,7 +67,7 @@
                             </span>
                         </td>
                         <td>{{ $deposit->created_at?->format('Y-m-d H:i') }}</td>
-                       @if($deposit->status == 'Pending')
+                       {{-- @if($deposit->status == 'Pending')
                             <td>
                                 <button type="button"
                                         class="btn btn-sm btn-primary"
@@ -70,11 +76,11 @@
                                     <i class="fas fa-edit"></i> Manage
                                 </button>
                             </td>
-                       @endif
+                       @endif --}}
                     </tr>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="actionModal{{ $deposit->id }}" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
+                    {{-- <div class="modal fade" id="actionModal{{ $deposit->id }}" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <form method="POST" action="{{ route('deposit.update', $deposit->id) }}">
                                 @csrf
@@ -105,11 +111,11 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
 
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No withdrawals found.</td>
+                        <td colspan="8" class="text-center">No Deposits found.</td>
                     </tr>
                 @endforelse
                 </tbody>

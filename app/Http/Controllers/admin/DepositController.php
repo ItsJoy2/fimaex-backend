@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
 use App\Models\Transactions;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,9 +13,24 @@ class DepositController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $deposits = Transactions::where('remark','=','deposit')->paginate(10);
+        $query = Deposit::with('user'); // eager load user
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+
+            $query->where(function ($q) use ($search) {
+                $q->where('transaction_id', 'LIKE', "%{$search}%")
+                ->orWhereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('name', 'LIKE', "%{$search}%")
+                                ->orWhere('email', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $deposits = $query->paginate(10);
+
         return view('admin.pages.deposit.index', compact('deposits'));
     }
 

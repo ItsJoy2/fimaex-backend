@@ -17,8 +17,21 @@ class WithdrawController extends Controller
     {
         $query = Transactions::where('remark', 'withdrawal');
 
-        if ($request->filled('filter')) {
-            $query->where('status', $request->filter);
+        // if ($request->filled('filter')) {
+        //     $query->where('status', $request->filter);
+        // }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('transaction_id', 'LIKE', "%{$search}%")
+                ->orWhere('details', 'LIKE', "%{$search}%")
+                ->orWhereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('name', 'LIKE', "%{$search}%")
+                                ->orWhere('email', 'LIKE', "%{$search}%");
+                });
+            });
         }
 
         $withdrawals = $query->orderBy('created_at', 'desc')->paginate(10);
@@ -26,24 +39,24 @@ class WithdrawController extends Controller
         return view('admin.pages.withdraw.index', compact('withdrawals'));
     }
 
-    public function update(Request $request,$id)
-    {
-        $request->validate([
-            'status' => 'required|in:pending,completed,rejected',
-        ]);
+    // public function update(Request $request,$id)
+    // {
+    //     $request->validate([
+    //         'status' => 'required|in:pending,completed,rejected',
+    //     ]);
 
-        $withdraw = Transactions::findOrFail($id);
-        if ($request->status == 'rejected') {
-            User::where('id', $withdraw->user_id)->increment('wallet', $withdraw->amount);
-            $withdraw->status = $request->status;
-            $withdraw->save();
-            return redirect()->route('withdraw.index')->with('success', 'Withdrawal status updated.');
-        }
-        $withdraw->status = $request->status;
-        $withdraw->save();
+    //     $withdraw = Transactions::findOrFail($id);
+    //     if ($request->status == 'rejected') {
+    //         User::where('id', $withdraw->user_id)->increment('wallet', $withdraw->amount);
+    //         $withdraw->status = $request->status;
+    //         $withdraw->save();
+    //         return redirect()->route('withdraw.index')->with('success', 'Withdrawal status updated.');
+    //     }
+    //     $withdraw->status = $request->status;
+    //     $withdraw->save();
 
-        return redirect()->route('withdraw.index')->with('success', 'Withdrawal status updated.');
-    }
+    //     return redirect()->route('withdraw.index')->with('success', 'Withdrawal status updated.');
+    // }
 
     /**
      * Show the form for creating a new resource.
