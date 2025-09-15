@@ -3,7 +3,7 @@
     <div class="container mt-4">
 
         {{-- Pending Withdrawals Alert --}}
-        @if($dashboardData['pendingWithdrawals'] > 0)
+        {{-- @if($dashboardData['pendingWithdrawals'] > 0)
             <a href="/withdraw" class="text-decoration-none">
                 <div class="alert alert-warning d-flex align-items-center shadow-sm rounded p-3 mb-4">
                     <i class="fas fa-exclamation-triangle text-dark fs-4 me-3"></i>
@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </a>
-        @endif
+        @endif --}}
 
         {{-- Users Section --}}
         <div class="card shadow-sm mb-4 border-0">
@@ -56,10 +56,10 @@
             <div class="card-body">
                 <h5 class="card-title fw-bold mb-4">Deposits</h5>
                 <div class="row g-4">
-                    <x-dashboard.stat-card icon="fas fa-hand-holding-usd" value="${{$dashboardData['totalDeposits']}} USD" label="Total Deposited" bg="success" />
-                    <x-dashboard.stat-card icon="fas fa-clock" value="{{$dashboardData['pendingDeposits']}}" label="Pending Deposits" bg="warning" />
-                    <x-dashboard.stat-card icon="fas fa-times-circle" value="{{$dashboardData['rejectedDeposits']}}" label="Rejected Deposits" bg="danger" />
-                    <x-dashboard.stat-card icon="fas fa-percent" value="$0.00 USD" label="Deposited Charge" bg="secondary" />
+                    <x-dashboard.stat-card icon="fas fa-hand-holding-usd" value="${{ number_format($dashboardData['totalDeposits'], 2) }}" label="Total Deposits" bg="success" />
+                    <x-dashboard.stat-card icon="fas fa-hand-holding-usd" value="${{ number_format($dashboardData['todayDeposits'], 2) }}" label="Today Deposits" bg="warning" />
+                    <x-dashboard.stat-card icon="fas fa-hand-holding-usd" value="${{ number_format($dashboardData['last7DaysDeposits'], 2) }}" label="Last 7 Days Deposits" bg="info" />
+                    <x-dashboard.stat-card icon="fas fa-hand-holding-usd" value="${{ number_format($dashboardData['last30DaysDeposits'], 2) }}" label="Last 30 days Deposits" bg="secondary" />
                 </div>
             </div>
         </div>
@@ -70,9 +70,9 @@
                 <h5 class="card-title fw-bold mb-4">Withdrawals</h5>
                 <div class="row g-4">
                     <x-dashboard.stat-card icon="fas fa-credit-card" value="${{$dashboardData['totalWithdrawals']}}" label="Total Withdrawn" bg="success" />
-                    <x-dashboard.stat-card icon="fas fa-clock" value="${{$dashboardData['pendingWithdrawals']}}" label="Pending Withdrawals" bg="warning" />
-                    <x-dashboard.stat-card icon="fas fa-times-circle" value="${{$dashboardData['rejectedWithdrawals']}}" label="Rejected Withdrawals" bg="danger" />
-                    <x-dashboard.stat-card icon="fas fa-percent" value="${{$dashboardData['totalCharges']}}" label="Withdrawal Charge" bg="secondary" />
+                    <x-dashboard.stat-card icon="fas fa-credit-card" value="${{$dashboardData['todayWithdrawals']}}" label="Today  Withdrawals" bg="warning" />
+                    <x-dashboard.stat-card icon="fas fa-credit-card" value="${{$dashboardData['last30DaysWithdrawals']}}" label="Last 30 days Withdrawals" bg="info" />
+                    <x-dashboard.stat-card icon="fas fa-percent" value="${{number_format($dashboardData['withdrawChargeAmount'], 2)}}" label="Total Withdrawal Charge" bg="secondary" />
                 </div>
             </div>
         </div>

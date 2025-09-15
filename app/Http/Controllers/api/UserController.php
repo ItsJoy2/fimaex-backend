@@ -124,6 +124,11 @@ public function getDirectReferrals(Request $request): JsonResponse
                 'total_founder' => 0,
                 'available_founder_slot' => 0,
             ];
+        } else {
+            $settings = $settings->toArray();
+
+            $settings['logo'] = $settings['logo'] ? asset('storage/' . $settings['logo']) : null;
+            $settings['favicon'] = $settings['favicon'] ? asset('storage/' . $settings['favicon']) : null;
         }
 
         return response()->json([
@@ -131,5 +136,6 @@ public function getDirectReferrals(Request $request): JsonResponse
             'data' => $settings
         ]);
     }
+
 
 }
