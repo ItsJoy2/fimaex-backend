@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CronController;
-use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\admin\KycController;
 use App\Http\Controllers\admin\PlansController;
 use App\Http\Controllers\admin\UsersController;
@@ -28,6 +27,7 @@ Route::middleware('auth')->group(function () {
     //all user
     Route::get('users', [UsersController::class, 'index'])->name('users.index');
     Route::post('users/update', [UsersController::class, 'update'])->name('users.update');
+    Route::get('/users/{id}', [UsersController::class, 'show'])->name('users.show');
     Route::resource('all-plan', PlansController::class);
     Route::resource('withdraw', WithdrawController::class);
     Route::resource('transactions', TransactionsController::class);

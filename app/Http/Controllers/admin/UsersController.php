@@ -39,23 +39,31 @@ class UsersController extends Controller
         return view('admin.pages.users.index', compact('users'));
     }
 
-    public function update(Request $request)
+    public function show($id)
     {
-        $user = User::findOrFail($request->user_id);
+        $user = User::with(['founder', 'clubs', 'nominee', 'referredBy', 'referrals'])->findOrFail($id);
 
-        $validated = $request->validate([
-            'wallet'   => 'nullable|numeric',
-            'is_block' => 'required|boolean',
-        ]);
-
-        if ($request->filled('wallet')) {
-            $user->main_wallet = $request->wallet;
-        }
-
-        $user->is_block = $request->is_block;
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'User updated successfully!');
+        return view('admin.pages.users.show', compact('user'));
     }
+public function update(Request $request)
+{
+    $user = User::findOrFail($request->user_id);
+
+    $validated = $request->validate([
+        'name'     => 'required|string|max:255',
+        'email'    => 'required|email|max:255|unique:users,email,' . $user->id,
+        'mobile'   => 'required|string|max:20',
+        'is_block' => 'required|boolean',
+    ]);
+
+    $user->name     = $request->name;
+    $user->email    = $request->email;
+    $user->mobile   = $request->mobile;
+    $user->is_block = $request->is_block;
+
+    $user->save();
+
+    return redirect()->back()->with('success', 'User updated successfully!');
+}
+
 }

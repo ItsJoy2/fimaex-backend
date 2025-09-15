@@ -73,7 +73,7 @@
                                     {{ $user->is_block ? 'Blocked' : 'Unblocked' }}
                                 </span>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <button type="button"
                                         class="btn btn-sm btn-primary updateStatusBtn"
                                         data-id="{{ $user->id }}"
@@ -85,6 +85,13 @@
                                         data-target="#actionModal">
                                     <i class="fas fa-edit"></i> Manage
                                 </button>
+                            </td> --}}
+
+                            <td> <a href="{{ route('users.show', $user->id) }}"><button type="button"
+                                        class="btn btn-sm btn-primary updateStatusBtn">
+                                    <i class="fas fa-edit"></i> View
+                                </button></a>
+
                             </td>
                         </tr>
                     @empty
