@@ -15,7 +15,7 @@ class WithdrawController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Transactions::where('remark', 'withdrawal');
+        $query = Transactions::where('remark', 'withdrawal')->whereIn('status', ['Completed','Paid']);
 
         // if ($request->filled('filter')) {
         //     $query->where('status', $request->filter);
