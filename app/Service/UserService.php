@@ -50,6 +50,8 @@ class UserService
             $clubBadge = asset('storage/' . $clubData->image);
         }
 
+        $profileImage = $user->image ? asset('storage/' . $user->image) : null;
+
         return response()->json([
             'status' => true,
             'message' => 'User Profile Retrieved Successfully',
@@ -57,7 +59,7 @@ class UserService
                 'user' => [
                     'id' => $user->id,
                     'name' => $user->name,
-                    'image' => $user->image,
+                    'image' => $profileImage,
                     'birthday' => $user->birthday,
                     'nid_or_passport' => $user->nid_or_passport,
                     'address' => $user->address,
