@@ -98,7 +98,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function activeClub()
     {
         return $this->clubs()->orderBy('required_refers', 'desc')->first();
-}
+    }
+    public function nominee()
+    {
+        return $this->hasOne(Nominee::class, 'user_id');
+    }
+
 
 }
 
