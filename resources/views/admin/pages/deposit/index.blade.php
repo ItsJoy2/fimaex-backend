@@ -60,10 +60,10 @@
 
                         <td>
                             <span class="badge
-                                @if($deposit->status == 'Pending') badge-warning
-                                @elseif($deposit->status == 'Rejected') badge-danger
-                                @else badge-success @endif">
-                                {{ ucfirst($deposit->status) }}
+                                @if($deposit->status == 0) badge-warning
+                                @elseif($deposit->status == 1) badge-success
+                                @else badge-danger @endif">
+                                {{ $deposit->status == 0 ? 'Pending' : ($deposit->status == 1 ? 'Completed' : 'Rejected') }}
                             </span>
                         </td>
                         <td>{{ $deposit->created_at?->format('Y-m-d H:i') }}</td>
