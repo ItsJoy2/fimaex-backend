@@ -15,8 +15,7 @@ class DepositController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Deposit::with('user'); // eager load user
-
+        $query = Deposit::where('status', 1)->with('user');
         if ($request->filled('search')) {
             $search = $request->input('search');
 
