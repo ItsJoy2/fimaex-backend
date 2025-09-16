@@ -45,8 +45,8 @@
                         <td>{{ $kyc->created_at ? $kyc->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
                         <td>{{ $kyc->name }}</td>
                         <td>
-                            <a href="{{ asset('storage/' . $kyc->nid_front) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $kyc->nid_front) }}" alt="NID Front" width="60" class="img-thumbnail">
+                            <a href="{{ Storage::url($kyc->nid_front) }}" target="_blank">
+                                <img src="{{ Storage::url($kyc->nid_front) }}" alt="NID Front" width="60" class="img-thumbnail">
                             </a>
                         </td>
                         <td>
