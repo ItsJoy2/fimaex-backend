@@ -114,8 +114,8 @@ class UserService
         $frontImgPath = $request->file('front_image')->store('kyc_images', 'public');
         $selfieImgPath = $request->file('selfie_image')->store('kyc_images', 'public');
 
-        $frontImgUrl = asset('public/storage/' . $frontImgPath);
-        $selfieImgUrl = asset('public/storage/' . $selfieImgPath);
+        $frontImgUrl = asset('storage/' . $frontImgPath);
+        $selfieImgUrl = asset('storage/' . $selfieImgPath);
 
         $existingKyc = Kyc::where('user_id', $user->id)->latest()->first();
 
@@ -139,7 +139,7 @@ class UserService
                 // Delete old images if they exist
                 foreach (['ind_front', 'ind_back', 'selfie'] as $field) {
                     if (!empty($existingKyc->$field)) {
-                        $path = str_replace(asset('public/storage') . '/', '', $existingKyc->$field);
+                        $path = str_replace(asset('storage') . '/', '', $existingKyc->$field);
                         Storage::disk('public')->delete($path);
                     }
                 }

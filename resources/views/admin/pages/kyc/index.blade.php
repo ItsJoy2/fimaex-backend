@@ -45,13 +45,13 @@
                         <td>{{ $kyc->created_at ? $kyc->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
                         <td>{{ $kyc->name }}</td>
                         <td>
-                            <a href="{{ Storage::url($kyc->nid_front) }}" target="_blank">
-                                <img src="{{ Storage::url($kyc->nid_front) }}" alt="NID Front" width="60" class="img-thumbnail">
+                            <a href="{{ $kyc->nid_front }}" target="_blank">
+                                <img src="{{ $kyc->nid_front }}" alt="NID Front" width="60" class="img-thumbnail">
                             </a>
                         </td>
                         <td>
-                            <a href="{{ asset('storage/' . $kyc->selfie) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $kyc->selfie) }}" alt="Selfie" width="60" class="img-thumbnail">
+                            <a href="{{ $kyc->selfie }}" target="_blank">
+                                <img src="{{ $kyc->selfie }}" alt="Selfie" width="60" class="img-thumbnail">
                             </a>
                         </td>
                         <td>{{ $kyc->details ?? 'N/A' }}</td>
