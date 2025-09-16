@@ -13,7 +13,7 @@
 
             <select name="remark" class="form-select w-auto">
                 <option value="">All Types</option>
-                @foreach(['deposit','withdrawal','transfer','referral_commission','interest','package_purchased','convert'] as $type)
+                @foreach(['withdrawal','transfer','referral_commission','package_purchased'] as $type)
                     <option value="{{ $type }}" {{ request('remark') == $type ? 'selected' : '' }}>
                         {{ ucwords(str_replace('_', ' ', $type)) }}
                     </option>

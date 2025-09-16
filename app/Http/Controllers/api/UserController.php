@@ -129,6 +129,8 @@ public function getDirectReferrals(Request $request): JsonResponse
         } else {
             $settings = $settings->toArray();
 
+            unset($settings['id'], $settings['created_at'], $settings['updated_at']);
+
             $settings['logo'] = $settings['logo'] ? asset('storage/' . $settings['logo']) : null;
             $settings['favicon'] = $settings['favicon'] ? asset('storage/' . $settings['favicon']) : null;
         }
