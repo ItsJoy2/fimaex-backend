@@ -36,6 +36,11 @@ class AuthController extends Controller
         return $this->authServices->updateProfile($request);
     }
 
+    public function changePassword(Request $request): JsonResponse
+    {
+        return $this->authServices->changePassword($request);
+    }
+
     public function ForgotPasswordSendEmail(Request $request)
     {
         $request->validate([

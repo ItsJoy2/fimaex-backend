@@ -48,6 +48,9 @@ Route::prefix('user')->middleware(['auth:sanctum','verified'])->group(function (
     Route::get('nominee', [UserController::class, 'nominee']);
     Route::post('nominee', [UserController::class, 'nomineeUpdate']);
 
+    // Change Password
+    Route::post('change-password', [AuthController::class, 'changePassword']);
+
 
 });
 
